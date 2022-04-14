@@ -11,3 +11,4 @@ The two documents under Docs/Project, namely the [Charter](./Docs/Project/Charte
 
 **NOTE:** In some projects, e.g. short term proof of principle (PoC) or proof of value (PoV) engagements, it can be relatively time consuming to create and all the recommended documents and artifacts. In that case, at least the Charter and Exit Report should be created and delivered to the customer or client. As necessary, organizations may modify certain sections of the documents. But it is strongly recommended that the content of the documents be maintained, as they provide important information about the project and deliverables.
 "# KobeBryantShotSelectionML" 
+"# KobeBryantShotSelectionML" 
