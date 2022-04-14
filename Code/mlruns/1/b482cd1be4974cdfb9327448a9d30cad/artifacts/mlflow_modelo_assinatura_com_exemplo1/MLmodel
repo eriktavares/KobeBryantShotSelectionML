@@ -1,0 +1,23 @@
+artifact_path: mlflow_modelo_assinatura_com_exemplo1
+flavors:
+  python_function:
+    env: conda.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    python_version: 3.6.13
+  sklearn:
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 0.23.2
+model_uuid: 1e1699adef6944e7afa5d713966af1fa
+run_id: b482cd1be4974cdfb9327448a9d30cad
+saved_input_example_info:
+  artifact_path: input_example.json
+  format: tf-serving
+  type: ndarray
+signature:
+  inputs: '[{"name": "alcohol", "type": "double"}, {"name": "volatile acidity", "type":
+    "double"}, {"name": "free sulfur dioxide", "type": "double"}, {"name": "residual
+    sugar", "type": "double"}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+utc_time_created: '2022-04-11 23:18:13.447592'
