@@ -1,0 +1,4 @@
+{
+  "GradientBoostingClassifier_score-2_unknown_dataset-2": "GradientBoostingClassifier.score(X=<DataFrame>, y=<Series>)",
+  "GradientBoostingClassifier_score_unknown_dataset": "GradientBoostingClassifier.score(X=<DataFrame>, y=<Series>)"
+}

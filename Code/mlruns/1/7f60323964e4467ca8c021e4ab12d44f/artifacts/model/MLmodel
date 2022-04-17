@@ -1,0 +1,29 @@
+artifact_path: model
+flavors:
+  python_function:
+    env: conda.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    python_version: 3.6.13
+  sklearn:
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 0.23.2
+model_uuid: 1f73db19a58c468ea6e795e9cecce671
+run_id: 7f60323964e4467ca8c021e4ab12d44f
+signature:
+  inputs: '[{"name": "lat", "type": "float"}, {"name": "lon", "type": "float"}, {"name":
+    "shot_distance", "type": "float"}, {"name": "minutes_remaining_0", "type": "float"},
+    {"name": "minutes_remaining_1", "type": "float"}, {"name": "minutes_remaining_10",
+    "type": "float"}, {"name": "minutes_remaining_11", "type": "float"}, {"name":
+    "minutes_remaining_2", "type": "float"}, {"name": "minutes_remaining_3", "type":
+    "float"}, {"name": "minutes_remaining_4", "type": "float"}, {"name": "minutes_remaining_5",
+    "type": "float"}, {"name": "minutes_remaining_6", "type": "float"}, {"name": "minutes_remaining_7",
+    "type": "float"}, {"name": "minutes_remaining_8", "type": "float"}, {"name": "minutes_remaining_9",
+    "type": "float"}, {"name": "period_1", "type": "float"}, {"name": "period_2",
+    "type": "float"}, {"name": "period_3", "type": "float"}, {"name": "period_4",
+    "type": "float"}, {"name": "period_5", "type": "float"}, {"name": "period_6",
+    "type": "float"}, {"name": "period_7", "type": "float"}, {"name": "playoffs_1",
+    "type": "float"}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int32", "shape": [-1]}}]'
+utc_time_created: '2022-04-17 21:14:52.406295'
