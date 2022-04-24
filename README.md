@@ -9,28 +9,12 @@ de foi convertida a cesta, variável alvo shot_made_flag.
 
 Este projeto possue o seguinte repositório de dados URL: https://github.com/eriktavares/KobeBryantShotSelectionML. As estruturas de diretórios de arquivos foram baseadas no padrão Framework TDSP da Microsoft, e foi baixo o template pela URL https://github.com/Azure/Azure-TDSP-ProjectTemplate. Somente a pasta Simple_Data foi renomeada para Data, por conta da descrição que foi solicitado no enunciado da atividade (moodle). O arquivo de dados foi renomeado para 
 
-
-```python
-import os
-import warnings
-import sys
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn import tree, preprocessing, metrics, model_selection
-import mlflow
-import mlflow.sklearn
-
-import logging
-
-logging.basicConfig(level=logging.WARN)
-logger = logging.getLogger(__name__)
-```
-
 Estrutura dos diretórios dentro do Repositório
 
 ![tdsp-dir-structure.png](attachment:tdsp-dir-structure.png)
+
+Os notebooks e os códigos .py es utilizados estão na pasta Code, o arquivo PDF e Markdown estão na pasta Docs\Project, e também como Markdown na pasta do projeto. A base de dados do MLflow estão no /Code e os artefatos gerados, estão no mlruns. Uma pasta backup foi adicionada com o ambiente Anaconda salvo, para caso haja algum problema de versão das bibliotecas e frameworks. 
+
 
 # 2. Diagrama MLOps
 
@@ -41,6 +25,7 @@ O Planejamento, onde será feito o diagrama pepiline do projeto, entre outros do
 Exploração de dados. os projetos de Machine Learning são baseados em informações, então, dessa forma dependendo do tamanho do projeto, pode ou não ser continua e deve fazer interface com planejamento e entendimento do negócio. E por ultimo abastecer uma base de dados com informações. No caso desse trabalho especifico, essa base é coletada do site kaggle.
 
 Desenvolvimento do Experimento. Com os dados em mãos, é iniciado o processo experimental onde é realizada a modelagem. Esta etapa começa com a validações dos dados, pode ser feita por exemplo utilizando o Pycaret Setup. A preparação dos dados, onde neste trabalho são removidos os dados nulos, normalização, entre outros processos de tratamento. Treino e avaliação, caso os resultados não sejam coonforme esperado, processo de melhoria e otimização, e nova avaliação. Posteriormente o registro, versionamento e depployment do modelo. Claro que podem ocorrer versionamentos durante qualquer etapa desenvolvimento. Após o deployment o modelo entra em operação, e pode ser como uma API, código, serviço, entre outros. A operação é monitorada e pode gerar novos gatilhos de desenvolvimento e melhorias, retreinamentos, etc. 
+Para o deploy e versionamento de código foram inseridos exemplos, como deploy com MLFlow e Doker, e no repositório de cógido, utilizando git.
 
 ![Diagrama%20ML.png](attachment:Diagrama%20ML.png)
 
@@ -206,6 +191,25 @@ Durante o treinamento são gerados um artefato Transformation Pipeline.pkl conte
 
 Durante a criação do modelo são gerados artefatos MLmodel, condayaml, model.pkl, requiriments.etx, alem de imagens dos plot das metricas (extra). Esses artefatos servem para caso preciso realizar a utilização do modelo, por exemplo como Python.
 Também esta incluído um dataset ../Data/Operalization/base_operation_processed.parquet' após a o processamento dos resultados com a coluna dos valores que foram preditos para facilitar os calculos de metricas no Streamlit
+
+
+```python
+import os
+import warnings
+import sys
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import tree, preprocessing, metrics, model_selection
+import mlflow
+import mlflow.sklearn
+
+import logging
+
+logging.basicConfig(level=logging.WARN)
+logger = logging.getLogger(__name__)
+```
 
 
 ```python
@@ -1253,7 +1257,7 @@ mlflow.end_run()
 
 
     
-![png](output_51_0.png)
+![png](output_52_0.png)
     
 
 
@@ -2474,8 +2478,8 @@ as metricas do teste com algoritmo durante o registro para Staging, e o algoritm
 
 # Versionamento
 
-Um Gráfico mostra a versão do modelo como eixo X e a métrica como eixo Y, Uma linha é o registro e outra a simulação da operação
-
+Um Gráfico mostra a versão do modelo como eixo X e a métrica como eixo Y, Uma linha é o registro e outra a simulação da operação. Este gráfico abaixo, é do Log Loss x Versão, na versão 7, nã houve monitoramento da operação, na 8, houve dois monitoramento, dessa forma o gráfico, ficou conforme abaixo:
+Na versão 09 também não houve o monitoramento da operação.
 
 ![VLL.png](attachment:VLL.png)
 
@@ -2485,10 +2489,7 @@ Da mesma forma o gráfico de F1-Score
 
 ![Vf1.png](attachment:Vf1.png)
 
-
-```python
-Outros graficos só de operação como curva_roc
-```
+Outros graficos só de operação como curva_roc.
 
 ![Oroc.png](attachment:Oroc.png)
 
@@ -2504,6 +2505,22 @@ o processo de Auto ML com a utilização das ferramentas Pycaret, MLFlow, Stream
 há, Jupyter notebook, Ambiente Anaconda, entre outros. 
 
 Este processo é ciclico, então, haveria novos preprocessamentos, com novo treino e teste, registro e versão e monitoramento ou simulação da operação. Os gráficos teriam a verão 12 incluída, e assim por diante.
+
+Uma importante verificação para a operação do modelo, é se a predição resultando em uma classe única, ou em uma classe com proporção muito superior a outra. No gráfico abaixo, mostra o percentual de acertos (classe 1) preditos, e em seguida o percentual de erros preditos (classe 0). Na sequência, os percentuais reais de acertos e erros. Os dados reais há uma proporção de aproximadamento metade, 47,3% acerto e 52,7% de erro. Os valores preditos na simulação da operação foi 28,91% acerto e 71,09% erro. Lembrando que esses dados são de arremessos de 3 pontos. 
+
+![Streamlit_acertos_erros.PNG](attachment:Streamlit_acertos_erros.PNG)
+
+Durante a operação o modelo poderia, prever um percentual maior de erros por exemplo, ou até mesmo 100% de erros, ou o contrario.
+Então foi criado uma verificação dos percentuais dos resultados preditos, para evitar que haja alguma dentencia a prever o número bem
+maior de erros que acertos ou o contrário. Evento que não ocorreria com os dados reais, nenhum jogador conseguiria por exemplo, acima
+de 90% dos arremessos, ou errar acima de 90%, ou abaixo de 10% para ambos. 
+Os percentuais das faixas esperadas são ajustávies, entre 0% e 100%, default. No default, não há alarme, porque sempre os resultados
+vão estão entre 0 e 100%.
+
+Ao setar por exemplo, o valor percentual máximo esperado para 70% e o mínimo para 20%, um alerta é emitido informando que a taxa de 
+erros predita foi maior que o limite estabelecido. Poderia também desencadear outras ações, como tocar um alarta sonoro, ou etc. Caso a informação do resultado real, não estivesse disponível, ou tivesse um longo tempo para ser determinada, monitoramentos alguns monitoramentos como esse de proporção esperada, poderiam ajudar no monitoramento da saúde. 
+
+Esses gráficos tiveram objetivo de demonstrar um pouco sobre a ferramenta no monitoramento de resultados dos experiêmentos e monitoramento da operação, neste caso, simulada do modelo. Também podem ser incluídos mais informações das outras etapas do processo de Auto ML.
 
 
 ```python
